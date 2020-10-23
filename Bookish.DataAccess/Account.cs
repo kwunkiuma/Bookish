@@ -1,13 +1,13 @@
 ﻿namespace Bookish.DataAccess
 {
-    public class Account
+    class Account
     {
+        public int UserId { get; set; }
         public string Username { get; set; }
-        public string Pass { get; set; }
 
         public override string ToString()
         {
-            return $"{Username}, {Pass}";
+            return $"{UserId} - {Username}";
         }
     }
 }
