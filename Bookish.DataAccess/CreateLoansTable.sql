@@ -1,0 +1,7 @@
+CREATE TABLE dbo.Loans (
+	LoanID int PRIMARY KEY NOT NULL,
+	ISBN char(13) FOREIGN KEY REFERENCES Books(ISBN) NOT NULL,
+	Username varchar(20) FOREIGN KEY REFERENCES Accounts(Username) NOT NULL,
+	DueDate date NOT NULL,
+)
+GO
