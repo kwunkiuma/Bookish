@@ -5,15 +5,18 @@ namespace Bookish.ConsoleApp
 {
     class Program
     {
-        public static void ListBooks()
+
+        public static void ListBooks(BookishService service)
         {
-            var response = DataHelper.ExecuteQuery<Book>(@"SELECT * FROM BOOKS");
+            var response = service.GetBooks();
             Console.WriteLine(string.Join("\n", response));
         }
 
         static void Main()
         {
-            ListBooks();
+            var service = new BookishService();
+
+            ListBooks(service);
         }
     }
 }
