@@ -5,18 +5,15 @@ namespace Bookish.ConsoleApp
 {
     class Program
     {
-
-        public static void ListBooks(BookishService service)
+        public static void ListBooks()
         {
-            var response = service.GetBooks();
+            var response = new BookishService().GetBooks();
             Console.WriteLine(string.Join("\n", response));
         }
 
         static void Main()
         {
-            var service = new BookishService();
-
-            ListBooks(service);
+            ListBooks();
         }
     }
 }
