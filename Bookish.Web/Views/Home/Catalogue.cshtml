@@ -1,0 +1,35 @@
+﻿@model CatalogueModel
+@{
+    ViewData["Title"] = "Catalogue";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.Books == null)
+{
+    <p>There are no books in the library!</p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                ISBN
+            </th>
+        </tr>
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Isbn</td>
+            </tr>
+        }
+    </table>
+}

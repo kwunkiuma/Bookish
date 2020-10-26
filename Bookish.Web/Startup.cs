@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bookish.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -42,6 +43,18 @@ namespace Bookish.Web
                     .RequireAuthenticatedUser()
                     .Build();
             });
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 1;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredUniqueChars = 1;
+            });
+
+            services.AddScoped<IBookishService, BookishService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

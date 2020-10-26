@@ -1,26 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using Bookish.DataAccess;
+using Bookish.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Bookish.Web.Models;
 
 namespace Bookish.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private readonly IBookishService bookishService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IBookishService bookishService)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.bookishService = bookishService;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Catalogue()
+        {
+            var books = bookishService.GetBooks();
+            var model = new CatalogueModel(books);
+            return View(model);
         }
 
         public IActionResult Privacy()
@@ -31,7 +37,7 @@ namespace Bookish.Web.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
     }
 }

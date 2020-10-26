@@ -5,7 +5,12 @@ using Dapper;
 
 namespace Bookish.DataAccess
 {
-    public class BookishService
+    public interface IBookishService
+    {
+        IEnumerable<Book> GetBooks();
+    }
+
+    public class BookishService : IBookishService
     {
         private readonly IDbConnection dbConnection = new SqlConnection("Server = localhost; Database = Bookish; Trusted_Connection = True;");
 
