@@ -7,7 +7,8 @@ namespace Bookish.DataAccess
 {
     public class BookishService
     {
-        private readonly IDbConnection dbConnection = new SqlConnection("Server = localhost; Database = Bookish; Trusted_Connection = True;");
+        private readonly IDbConnection dbConnection =
+            new SqlConnection("Server = localhost; Database = Bookish; Trusted_Connection = True;");
 
         public IEnumerable<Book> GetBooks()
         {

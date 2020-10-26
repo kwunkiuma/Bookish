@@ -1,0 +1,30 @@
+﻿@model Bookish.Web.Models.CatalogueModels
+@{
+    ViewBag.Title = "Catalogue";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+@if (Model.Books == null)
+{
+    <p>The library has no books.</p>
+}
+else
+{
+    <table class="table">
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>
+                    @book.Title
+                </td>
+                <td>
+                    @book.Author
+                </td>
+                <td>
+                    @book.Isbn
+                </td>
+            </tr>
+        }
+    </table>
+}

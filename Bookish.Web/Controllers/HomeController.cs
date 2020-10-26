@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bookish.Web.Models;
 
 namespace Bookish.Web.Controllers
 {
@@ -25,6 +26,14 @@ namespace Bookish.Web.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Catalogue()
+        {
+            ViewBag.Message = "Our selection of books.";
+            var catalogue = new CatalogueModels();
+
+            return View(catalogue);
         }
     }
 }
