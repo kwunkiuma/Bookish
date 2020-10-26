@@ -5,7 +5,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-@if (Model.Books == null)
+@if (Model.Catalogue == null)
 {
     <p>There are no books in the library!</p>
 }
@@ -22,13 +22,21 @@ else
             <th>
                 ISBN
             </th>
+            <th>
+                Total copies
+            </th>
+            <th>
+                Copies available
+            </th>
         </tr>
-        @foreach (var book in Model.Books)
+        @foreach (var book in Model.Catalogue)
         {
             <tr>
                 <td>@book.Title</td>
                 <td>@book.Author</td>
                 <td>@book.Isbn</td>
+                <td>@book.NumCopies</td>
+                <td>@book.NumAvailable</td>
             </tr>
         }
     </table>

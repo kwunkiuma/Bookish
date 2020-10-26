@@ -5,11 +5,10 @@ namespace Bookish.Web.Models
 {
     public class CatalogueModel
     {
-        public IEnumerable<Book> Books;
-
-        public CatalogueModel(IEnumerable<Book> books)
+        public IEnumerable<CatalogueEntry> Catalogue;
+        public CatalogueModel(IEnumerable<CatalogueEntry> catalogue)
         {
-            Books = books;
+            Catalogue = catalogue;
         }
     }
 }
