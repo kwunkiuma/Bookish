@@ -17,21 +17,11 @@ namespace Bookish.Web.Controllers
             this.bookishService = bookishService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult Catalogue()
         {
-            var catalogue = bookishService.GetCatalogue("");
-            var model = new CatalogueModel(catalogue);
+            var catalogue = bookishService.GetCatalogue("1");
+            var model = new CatalogueViewModel(catalogue);
             return View(model);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

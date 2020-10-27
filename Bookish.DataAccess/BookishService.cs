@@ -31,17 +31,13 @@ namespace Bookish.DataAccess
 	                COUNT(BookCopies.CopyID) - COUNT(Loans.CopyID) AS NumAvailable
                 FROM 
 	                Books
-	                LEFT JOIN BookCopies ON Books.ISBN = BookCopies.ISBN
-	                LEFT JOIN Loans ON Loans.CopyID = BookCopies.CopyID ";
-            query += 
-                $"WHERE Books.Title LIKE '%{filter}%' OR Books.Author LIKE '%{filter}%' ";
-            query +=
-                @"GROUP BY
+	                LEFT JOIN BookCopies ON BookCopies.ISBN = Books.ISBN
+	                LEFT JOIN Loans ON Loans.CopyID = BookCopies.CopyID
+                WHERE Books.Title LIKE @Filter OR Books.Author LIKE @Filter
+                GROUP BY
                     Books.ISBN, Books.Title, Books.Author";
-
-            return dbConnection.Query<CatalogueEntry>(query);
+            var parameters = new {Filter = $"%{filter}%"};
+            return dbConnection.Query<CatalogueEntry>(query, parameters);
         }
-
-
     }
 }

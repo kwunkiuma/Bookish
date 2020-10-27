@@ -1,11 +1,11 @@
-﻿@model CatalogueModel
+﻿@model CatalogueViewModel
 @{
     ViewData["Title"] = "Catalogue";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-@if (Model.Catalogue == null)
+@if (!Model.Catalogue.Any())
 {
     <p>There are no books in the library!</p>
 }
@@ -35,8 +35,8 @@ else
                 <td>@book.Title</td>
                 <td>@book.Author</td>
                 <td>@book.Isbn</td>
-                <td>@book.NumCopies</td>
-                <td>@book.NumAvailable</td>
+                <td>@book.Copies</td>
+                <td>@book.Available</td>
             </tr>
         }
     </table>
