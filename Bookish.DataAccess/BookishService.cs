@@ -27,8 +27,8 @@ namespace Bookish.DataAccess
 	                Books.Title AS Title,
 	                Books.Author AS Author,
 	                Books.ISBN AS ISBN,
-	                COUNT(BookCopies.CopyID) AS NumCopies,
-	                COUNT(BookCopies.CopyID) - COUNT(Loans.CopyID) AS NumAvailable
+	                COUNT(BookCopies.CopyID) AS Copies,
+	                COUNT(BookCopies.CopyID) - COUNT(Loans.CopyID) AS Available
                 FROM 
 	                Books
 	                LEFT JOIN BookCopies ON BookCopies.ISBN = Books.ISBN
@@ -36,8 +36,8 @@ namespace Bookish.DataAccess
                 WHERE Books.Title LIKE @Filter OR Books.Author LIKE @Filter
                 GROUP BY
                     Books.ISBN, Books.Title, Books.Author";
-            var parameters = new {Filter = $"%{filter}%"};
-            return dbConnection.Query<CatalogueEntry>(query, parameters);
+
+            return dbConnection.Query<CatalogueEntry>(query, new { Filter = $"%{filter}%" });
         }
     }
 }

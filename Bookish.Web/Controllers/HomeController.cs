@@ -17,9 +17,9 @@ namespace Bookish.Web.Controllers
             this.bookishService = bookishService;
         }
 
-        public IActionResult Catalogue()
+        public IActionResult Catalogue(string filter = "")
         {
-            var catalogue = bookishService.GetCatalogue("1");
+            var catalogue = bookishService.GetCatalogue(filter);
             var model = new CatalogueViewModel(catalogue);
             return View(model);
         }
