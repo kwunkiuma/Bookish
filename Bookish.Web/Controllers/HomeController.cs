@@ -24,6 +24,13 @@ namespace Bookish.Web.Controllers
             return View(model);
         }
 
+        public IActionResult Copies(string isbn, string title, string author)
+        {
+            var copies = bookishService.GetCopies(isbn);
+            var model = new CopiesViewModel(title, author, copies);
+            return View(model);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

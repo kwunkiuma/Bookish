@@ -1,0 +1,52 @@
+﻿@model CopiesViewModel
+@{
+    ViewData["Title"] = "Catalogue";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h2>@Model.Title</h2>
+<h3>by @Model.Author</h3>
+
+@if (!Model.Copies.Any())
+{
+    <p>There are no copies of this book!</p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+            </th>
+        </tr>
+        @foreach (var copy in Model.Copies)
+        {
+            <tr>
+                <td>@copy.CopyId</td>
+                @if (string.IsNullOrEmpty(copy.Username))
+                {
+                    <td>
+                        Available to borrow
+                    </td>
+                    <td>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Unavailable - held by @copy.Username
+                    </td>
+                    <td>
+                        Due on @copy.DueDate.ToShortDateString()
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+}
