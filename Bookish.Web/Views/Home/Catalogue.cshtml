@@ -1,0 +1,47 @@
+﻿@model CatalogueViewModel
+@{
+    ViewData["Title"] = "Catalogue";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!Model.Catalogue.Any())
+{
+    <p>There are no books in the library!</p>
+}
+else
+{
+    <form asp-action="Catalogue">
+        <input type="text" name="filter"/>
+        <input type="submit" value="Search"/>
+    </form>
+    <table class="table">
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                ISBN
+            </th>
+            <th>
+                Total copies
+            </th>
+            <th>
+                Copies available
+            </th>
+        </tr>
+        @foreach (var book in Model.Catalogue)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Isbn</td>
+                <td>@book.Copies</td>
+                <td>@book.Available</td>
+            </tr>
+        }
+    </table>
+}
