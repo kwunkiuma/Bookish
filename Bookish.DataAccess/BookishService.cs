@@ -45,15 +45,18 @@ namespace Bookish.DataAccess
         {
             var query =
                 @"SELECT
+                    Books.Title AS Title,
+                    Books.Author AS Author,
                     BookCopies.CopyID AS CopyID,
                     AspNetUsers.UserName AS Username,
                     Loans.DueDate AS DueDate
-                FROM
-                    BookCopies
+                    FROM
+                BookCopies
+                    LEFT JOIN Books ON Books.ISBN = BookCopies.ISBN
                     LEFT JOIN Loans ON BookCopies.CopyID = Loans.CopyID
                     LEFT JOIN AspNetUsers ON Loans.LenderID = AspNetUsers.Id
                 WHERE
-                   ISBN = @Filter
+                    BookCopies.ISBN = @Filter
                 ORDER BY
                     DueDate";
 

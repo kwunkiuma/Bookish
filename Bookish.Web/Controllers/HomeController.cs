@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using Bookish.DataAccess;
 using Bookish.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -24,10 +25,18 @@ namespace Bookish.Web.Controllers
             return View(model);
         }
 
-        public IActionResult Copies(string isbn, string title, string author)
+        [Route("/Home/Copies/{isbn}")]
+        public IActionResult Copies(string isbn)
         {
-            var copies = bookishService.GetCopies(isbn);
-            var model = new CopiesViewModel(title, author, copies);
+            var copies = bookishService.GetCopies(isbn).ToList();
+
+            if (!copies.Any())
+            {
+                return RedirectToAction("Error", "Home");
+                
+            }
+
+            var model = new CopiesViewModel(copies);
             return View(model);
         }
 

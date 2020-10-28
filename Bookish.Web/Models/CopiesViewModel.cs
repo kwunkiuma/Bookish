@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Bookish.DataAccess;
 
 namespace Bookish.Web.Models
@@ -9,11 +10,12 @@ namespace Bookish.Web.Models
         public string Author { get; }
         public IEnumerable<CopiesEntry> Copies { get; }
 
-        public CopiesViewModel(string title, string author, IEnumerable<CopiesEntry> copies)
+        public CopiesViewModel(IEnumerable<CopiesEntry> copies)
         {
-            Title = title;
-            Author = author;
-            Copies = copies;
+            Copies = copies.ToList();
+
+            Title = Copies.First().Title;
+            Author = Copies.First().Author;
         }
     }
 }

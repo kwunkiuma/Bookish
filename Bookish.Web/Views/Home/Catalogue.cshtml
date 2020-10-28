@@ -36,7 +36,7 @@ else
         @foreach (var book in Model.Catalogue)
         {
             <tr>
-                <td><a asp-action="Copies" asp-route-isbn="@book.Isbn" asp-route-author="@book.Author" asp-route-title="@book.Title">@book.Title</a></td>
+                <td><a asp-action="Copies" asp-route-isbn="@book.Isbn">@book.Title</a></td>
                 <td>@book.Author</td>
                 <td>@book.Isbn</td>
                 <td>@book.Copies</td>
