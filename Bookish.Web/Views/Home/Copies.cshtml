@@ -4,23 +4,25 @@
     ViewData["Author"] = Model.Author;
 }
 
-<h1>@ViewData["Title"]</h1>
-<h3>by @ViewData["Author"]</h3>
+<h1>@ViewData["Title"] - by @ViewData["Author"]</h1>
 
-<table class="table">
-    <tr>
-        <th>
-            ID
-        </th>
-        <th>
-            Status
-        </th>
-    </tr>
-    @foreach (var copy in Model.Copies)
-    {
+
+<div style="margin-top: 20px">
+    <table class="table">
         <tr>
-            <td>@copy.CopyId</td>
-            <td>@Model.GetStatus(copy)</td>
+            <th>
+                ID
+            </th>
+            <th>
+                Status
+            </th>
         </tr>
-    }
-</table>
+        @foreach (var copy in Model.Copies)
+        {
+            <tr>
+                <td>@copy.CopyId</td>
+                <td>@Model.GetStatus(copy)</td>
+            </tr>
+        }
+    </table>
+</div>

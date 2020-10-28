@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Bookish.DataAccess;
-using Microsoft.AspNetCore.Http.Connections;
 
 namespace Bookish.Web.Models
 {

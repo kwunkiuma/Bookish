@@ -11,37 +11,39 @@
 }
 else
 {
-    <form asp-action="Catalogue">
+    <form asp-action="Catalogue" style="margin-top: 20px">
         <input type="text" name="filter"/>
-        <input type="submit" value="Search"/>
+        <input type="submit" value="Search" />
     </form>
-    <table class="table">
-        <tr>
-            <th>
-                Title
-            </th>
-            <th>
-                Author
-            </th>
-            <th>
-                ISBN
-            </th>
-            <th>
-                Total copies
-            </th>
-            <th>
-                Copies available
-            </th>
-        </tr>
-        @foreach (var book in Model.Catalogue)
-        {
+    <div style="margin-top: 10px">
+        <table class="table">
             <tr>
-                <td><a asp-action="Copies" asp-route-isbn="@book.Isbn">@book.Title</a></td>
-                <td>@book.Author</td>
-                <td>@book.Isbn</td>
-                <td>@book.Copies</td>
-                <td>@book.Available</td>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Author
+                </th>
+                <th>
+                    ISBN
+                </th>
+                <th>
+                    Total copies
+                </th>
+                <th>
+                    Copies available
+                </th>
             </tr>
-        }
-    </table>
+            @foreach (var book in Model.Catalogue)
+            {
+                <tr>
+                    <td><a asp-action="Copies" asp-route-isbn="@book.Isbn">@book.Title</a></td>
+                    <td>@book.Author</td>
+                    <td>@book.Isbn</td>
+                    <td>@book.Copies</td>
+                    <td>@book.Available</td>
+                </tr>
+            }
+        </table>
+    </div>
 }

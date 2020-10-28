@@ -33,7 +33,6 @@ namespace Bookish.Web.Controllers
             if (!copies.Any())
             {
                 return RedirectToAction("Error", "Home");
-                
             }
 
             var model = new CopiesViewModel(copies);
