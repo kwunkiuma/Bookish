@@ -20,12 +20,9 @@ namespace Bookish.Web.Models
 
         public string GetStatus(BookCopy copy)
         {
-            if (string.IsNullOrEmpty(copy.Username))
-            {
-                return "Available to borrow";
-            }
-
-            return $"Unavailable - held by {copy.Username} and due on {copy.DueDate.ToShortDateString()}";
+            return (string.IsNullOrEmpty(copy.Username))
+                ? $"Unavailable - held by {copy.Username} and due on {copy.DueDate.ToShortDateString()}"
+                : "Available to borrow";
         }
     }
 }

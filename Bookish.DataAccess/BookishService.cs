@@ -41,7 +41,7 @@ namespace Bookish.DataAccess
             return dbConnection.Query<CatalogueEntry>(query, new { Filter = $"%{filter}%" });
         }
 
-        public IEnumerable<BookCopy> GetCopies(string filter)
+        public IEnumerable<BookCopy> GetCopies(string isbn)
         {
             var query =
                 @"SELECT
@@ -60,7 +60,7 @@ namespace Bookish.DataAccess
                 ORDER BY
                     DueDate";
 
-            return dbConnection.Query<BookCopy>(query, new { Filter = filter });
+            return dbConnection.Query<BookCopy>(query, new { Filter = isbn });
         }
     }
 }
