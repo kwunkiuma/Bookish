@@ -15,30 +15,12 @@
         <th>
             Status
         </th>
-        <th>
-        </th>
     </tr>
     @foreach (var copy in Model.Copies)
     {
         <tr>
             <td>@copy.CopyId</td>
-            @if (string.IsNullOrEmpty(copy.Username))
-            {
-                <td>
-                    Available to borrow
-                </td>
-                <td>
-                </td>
-            }
-            else
-            {
-                <td>
-                    Unavailable - held by @copy.Username
-                </td>
-                <td>
-                    Due on @copy.DueDate.ToShortDateString()
-                </td>
-            }
+            <td>@Model.GetStatus(copy)</td>
         </tr>
     }
 </table>

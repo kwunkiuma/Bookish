@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Bookish.DataAccess;
+using Microsoft.AspNetCore.Http.Connections;
 
 namespace Bookish.Web.Models
 {
@@ -16,6 +18,16 @@ namespace Bookish.Web.Models
 
             Title = Copies.First().Title;
             Author = Copies.First().Author;
+        }
+
+        public string GetStatus(CopiesEntry copy)
+        {
+            if (string.IsNullOrEmpty(copy.Username))
+            {
+                return "Available to borrow";
+            }
+
+            return $"Unavailable - held by {copy.Username} and due on {copy.DueDate.ToShortDateString()}";
         }
     }
 }
