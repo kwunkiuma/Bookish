@@ -9,7 +9,7 @@ namespace Bookish.DataAccess
     {
         IEnumerable<Book> GetBooks();
         IEnumerable<CatalogueEntry> GetCatalogue(string filter);
-        IEnumerable<CopiesEntry> GetCopies(string filter);
+        IEnumerable<BookCopy> GetCopies(string filter);
     }
 
     public class BookishService : IBookishService
@@ -41,7 +41,7 @@ namespace Bookish.DataAccess
             return dbConnection.Query<CatalogueEntry>(query, new { Filter = $"%{filter}%" });
         }
 
-        public IEnumerable<CopiesEntry> GetCopies(string filter)
+        public IEnumerable<BookCopy> GetCopies(string filter)
         {
             var query =
                 @"SELECT
@@ -60,7 +60,7 @@ namespace Bookish.DataAccess
                 ORDER BY
                     DueDate";
 
-            return dbConnection.Query<CopiesEntry>(query, new { Filter = filter });
+            return dbConnection.Query<BookCopy>(query, new { Filter = filter });
         }
     }
 }

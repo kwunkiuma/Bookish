@@ -10,9 +10,9 @@ namespace Bookish.Web.Models
     {
         public string Title { get; }
         public string Author { get; }
-        public IEnumerable<CopiesEntry> Copies { get; }
+        public IEnumerable<BookCopy> Copies { get; }
 
-        public CopiesViewModel(IEnumerable<CopiesEntry> copies)
+        public CopiesViewModel(IEnumerable<BookCopy> copies)
         {
             Copies = copies.ToList();
 
@@ -20,7 +20,7 @@ namespace Bookish.Web.Models
             Author = Copies.First().Author;
         }
 
-        public string GetStatus(CopiesEntry copy)
+        public string GetStatus(BookCopy copy)
         {
             if (string.IsNullOrEmpty(copy.Username))
             {

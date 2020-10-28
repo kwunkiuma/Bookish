@@ -2,7 +2,7 @@
 
 namespace Bookish.DataAccess
 {
-    public class CopiesEntry
+    public class BookCopy
     {
         public string Title { get; set; }
         public string Author { get; set; }
