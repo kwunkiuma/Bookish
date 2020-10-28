@@ -14,13 +14,14 @@ namespace Bookish.Web.Models
         {
             Copies = copies.ToList();
 
-            Title = Copies.First().Title;
-            Author = Copies.First().Author;
+            var copy = Copies.First();
+            Title = copy.Title;
+            Author = copy.Author;
         }
 
         public string GetStatus(BookCopy copy)
         {
-            return (string.IsNullOrEmpty(copy.Username))
+            return string.IsNullOrEmpty(copy.Username)
                 ? $"Unavailable - held by {copy.Username} and due on {copy.DueDate.ToShortDateString()}"
                 : "Available to borrow";
         }
