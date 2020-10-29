@@ -10,6 +10,7 @@ namespace Bookish.DataAccess
         IEnumerable<Book> GetBooks();
         IEnumerable<CatalogueEntry> GetCatalogue(string filter);
         IEnumerable<BookCopy> GetCopies(string filter);
+        IEnumerable<BookLoan> GetLoans(string userId);
     }
 
     public class BookishService : IBookishService
@@ -61,6 +62,27 @@ namespace Bookish.DataAccess
                     DueDate";
 
             return dbConnection.Query<BookCopy>(query, new { Filter = isbn });
+        }
+
+        public IEnumerable<BookLoan> GetLoans(string userId)
+        {
+            var query =
+                @"SELECT
+                    Loans.CopyID AS CopyID,
+                    Books.Title AS Title,
+                    Books.Author AS Author,
+                    Books.ISBN AS ISBN,
+                    Loans.DueDate AS DueDate
+                FROM
+                    Loans
+                    JOIN BookCopies ON Loans.CopyID = BookCopies.CopyID
+                    JOIN Books ON BookCopies.ISBN = Books.ISBN
+                WHERE
+                    Loans.LenderID = @UserID
+                ORDER BY
+	                Loans.DueDate";
+
+            return dbConnection.Query<BookLoan>(query, new { UserID = userId });
         }
     }
 }

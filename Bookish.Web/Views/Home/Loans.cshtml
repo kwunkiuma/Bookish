@@ -1,0 +1,40 @@
+﻿@model LoansViewModel
+@{
+    ViewData["Title"] = "Your Loans";
+}
+
+<div class="header">
+    <h1>@ViewData["Title"]</h1>
+</div>
+
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                ISBN
+            </th>
+            <th>
+                Due date
+            </th>
+        </tr>
+        @foreach (var bookLoan in Model.BookLoans)
+        {
+            <tr>
+                <td>@bookLoan.CopyId</td>
+                <td><a asp-action="Copies" asp-route-isbn="@bookLoan.Isbn">@bookLoan.Title</a></td>
+                <td>@bookLoan.Author</td>
+                <td>@bookLoan.Isbn</td>
+                <td>@bookLoan.DueDate.ToShortDateString()</td>
+            </tr>
+        }
+    </table>
+</div>
