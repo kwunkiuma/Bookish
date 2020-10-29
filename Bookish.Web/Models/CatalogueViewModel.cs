@@ -12,21 +12,23 @@ namespace Bookish.Web.Models
         public int Page { get; }
         public int LastPage { get; }
 
+        private const int PageSize = 5;
+
         public CatalogueViewModel(IEnumerable<CatalogueEntry> catalogue, int page = 1, string filter = "")
         {
             Page = page;
             Filter = filter;
 
             Catalogue = catalogue.ToList();
-            LastPage = (int)Math.Ceiling(((decimal) Catalogue.Count() / 5));
+            LastPage = (int) Math.Ceiling(Catalogue.Count() / (double) PageSize);
             Catalogue = Catalogue
-                .Skip((page - 1) * 5)
-                .Take(5);
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize);
         }
 
-        public string GetListClasses(int pageNumber)
+        public string GetPageNumberClass(int pageNumber)
         {
-            return (pageNumber == Page)
+            return pageNumber == Page
                 ? "page-item active"
                 : "page-item";
         }
