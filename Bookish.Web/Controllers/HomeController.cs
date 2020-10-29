@@ -25,6 +25,14 @@ namespace Bookish.Web.Controllers
             return View(model);
         }
 
+        public IActionResult Loans()
+        {
+            var userId = User.Claims.First().Value;
+            var loans = bookishService.GetLoans(userId);
+            var model = new LoansViewModel(loans);
+            return View(model);
+        }
+
         [Route("/Home/Copies/{isbn}")]
         public IActionResult Copies(string isbn)
         {
