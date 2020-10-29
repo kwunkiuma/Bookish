@@ -35,9 +35,12 @@ namespace Bookish.DataAccess
 	                Books
 	                LEFT JOIN BookCopies ON BookCopies.ISBN = Books.ISBN
 	                LEFT JOIN Loans ON Loans.CopyID = BookCopies.CopyID
-                WHERE Books.Title LIKE @Filter OR Books.Author LIKE @Filter
+                WHERE
+                    Books.Title LIKE @Filter OR Books.Author LIKE @Filter
                 GROUP BY
-                    Books.ISBN, Books.Title, Books.Author";
+                    Books.ISBN, Books.Title, Books.Author
+                ORDER BY
+	                Books.Title";
 
             return dbConnection.Query<CatalogueEntry>(query, new { Filter = $"%{filter}%" });
         }
