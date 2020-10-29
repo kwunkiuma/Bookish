@@ -12,7 +12,7 @@ namespace Bookish.Web.Models
 
         public CopiesViewModel(IEnumerable<BookCopy> copies)
         {
-            Copies = copies.ToList();
+            Copies = copies;
 
             var copy = Copies.First();
             Title = copy.Title;
