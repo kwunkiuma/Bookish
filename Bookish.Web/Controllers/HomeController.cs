@@ -18,10 +18,10 @@ namespace Bookish.Web.Controllers
             this.bookishService = bookishService;
         }
 
-        public IActionResult Catalogue(string filter = "")
+        public IActionResult Catalogue(int page = 1, string filter = "")
         {
             var catalogue = bookishService.GetCatalogue(filter);
-            var model = new CatalogueViewModel(catalogue);
+            var model = new CatalogueViewModel(catalogue, page, filter);
             return View(model);
         }
 
