@@ -3,7 +3,9 @@
     ViewData["Title"] = "Catalogue";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="header">
+    <h1>@ViewData["Title"]</h1>
+</div>
 
 @if (!Model.Catalogue.Any())
 {
@@ -13,35 +15,37 @@ else
 {
     <form asp-action="Catalogue">
         <input type="text" name="filter"/>
-        <input type="submit" value="Search"/>
+        <input type="submit" value="Search" />
     </form>
-    <table class="table">
-        <tr>
-            <th>
-                Title
-            </th>
-            <th>
-                Author
-            </th>
-            <th>
-                ISBN
-            </th>
-            <th>
-                Total copies
-            </th>
-            <th>
-                Copies available
-            </th>
-        </tr>
-        @foreach (var book in Model.Catalogue)
-        {
+    <div>
+        <table class="table">
             <tr>
-                <td>@book.Title</td>
-                <td>@book.Author</td>
-                <td>@book.Isbn</td>
-                <td>@book.Copies</td>
-                <td>@book.Available</td>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Author
+                </th>
+                <th>
+                    ISBN
+                </th>
+                <th>
+                    Total copies
+                </th>
+                <th>
+                    Copies available
+                </th>
             </tr>
-        }
-    </table>
+            @foreach (var book in Model.Catalogue)
+            {
+                <tr>
+                    <td><a asp-action="Copies" asp-route-isbn="@book.Isbn">@book.Title</a></td>
+                    <td>@book.Author</td>
+                    <td>@book.Isbn</td>
+                    <td>@book.Copies</td>
+                    <td>@book.Available</td>
+                </tr>
+            }
+        </table>
+    </div>
 }

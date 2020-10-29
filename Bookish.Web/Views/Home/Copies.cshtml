@@ -1,0 +1,30 @@
+﻿@model CopiesViewModel
+@{
+    ViewData["Title"] = Model.Title;
+    ViewData["Author"] = Model.Author;
+}
+
+<div class="header">
+    <h1>@ViewData["Title"] - by @ViewData["Author"]</h1>
+</div>
+
+
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+        @foreach (var copy in Model.Copies)
+        {
+            <tr>
+                <td>@copy.CopyId</td>
+                <td>@Model.GetStatus(copy)</td>
+            </tr>
+        }
+    </table>
+</div>

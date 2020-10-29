@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using Bookish.DataAccess;
 using Bookish.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,20 @@ namespace Bookish.Web.Controllers
         {
             var catalogue = bookishService.GetCatalogue(filter);
             var model = new CatalogueViewModel(catalogue);
+            return View(model);
+        }
+
+        [Route("/Home/Copies/{isbn}")]
+        public IActionResult Copies(string isbn)
+        {
+            var copies = bookishService.GetCopies(isbn).ToList();
+
+            if (!copies.Any())
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            var model = new CopiesViewModel(copies);
             return View(model);
         }
 
