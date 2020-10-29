@@ -30,7 +30,7 @@
         {
             <tr>
                 <td>@bookLoan.CopyId</td>
-                <td>@bookLoan.Title</td>
+                <td><a asp-action="Copies" asp-route-isbn="@bookLoan.Isbn">@bookLoan.Title</a></td>
                 <td>@bookLoan.Author</td>
                 <td>@bookLoan.Isbn</td>
                 <td>@bookLoan.DueDate.ToShortDateString()</td>
