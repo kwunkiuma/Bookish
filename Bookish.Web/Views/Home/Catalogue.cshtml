@@ -14,8 +14,14 @@
 else
 {
     <form asp-action="Catalogue">
-        <input type="text" name="filter"/>
-        <input type="submit" value="Search" />
+        <div class="form-row">
+            <div class="form-group col-md-11">
+                <input type="text" name="filter" class="form-control" placeholder="Search"/>
+            </div>
+            <div class="form-group col-md-1">
+                <button type="submit" class="btn btn-primary mb-2 form-control">Search</button>
+            </div>
+        </div>
     </form>
     <div>
         <table class="table">
