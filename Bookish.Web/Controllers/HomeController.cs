@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Bookish.DataAccess;
 using Bookish.Web.Models;
@@ -45,6 +46,30 @@ namespace Bookish.Web.Controllers
 
             var model = new CopiesViewModel(copies);
             return View(model);
+        }
+
+        public IActionResult NewBook()
+        {
+            return View();
+        }
+
+        public IActionResult AddBook(string title, string author, string isbn, int totalCopies)
+        {
+            try
+            {
+                bookishService.AddBook(title, author, isbn, totalCopies);
+            }
+            catch
+            {
+                return RedirectToAction("NewBook");
+            }
+
+            return RedirectToAction("Barcodes");
+        }
+
+        public IActionResult Barcodes()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using Dapper;
 
 namespace Bookish.DataAccess
@@ -11,6 +12,7 @@ namespace Bookish.DataAccess
         IEnumerable<CatalogueEntry> GetCatalogue(string filter);
         IEnumerable<BookCopy> GetCopies(string filter);
         IEnumerable<BookLoan> GetLoans(string userId);
+        void AddBook(string title, string author, string isbn, int totalCopies);
     }
 
     public class BookishService : IBookishService
@@ -85,7 +87,39 @@ namespace Bookish.DataAccess
                 ORDER BY
 	                Loans.DueDate";
 
-            return dbConnection.Query<BookLoan>(query, new { UserID = userId });
+            return dbConnection.Query<BookLoan>(query, new {UserID = userId});
+        }
+
+        public void AddBook(string title, string author, string isbn, int totalCopies)
+        {
+            var booksQuery =
+                @"INSERT INTO Books (ISBN, Title, Author)
+                VALUES (@ISBN, @Title, @Author)";
+
+            var parameters = new { Title = title, Author = author, ISBN = isbn };
+
+            dbConnection.Execute(booksQuery, parameters);
+
+            var lastId = LastCopiesId();
+
+            var valuesList = new List<string>();
+            for (var i = 1; i <= totalCopies; i++)
+            {
+                valuesList.Add($"({lastId + i}, @ISBN)");
+            }
+
+            var copiesQuery =
+                @"INSERT INTO BookCopies (CopyId, ISBN) VALUES " +
+                string.Join(", ", valuesList);
+
+            dbConnection.Execute(copiesQuery, parameters);
+        }
+
+        private int LastCopiesId()
+        {
+            var query = "SELECT max(CopyID) FROM BookCopies";
+
+            return dbConnection.Query<int>(query).SingleOrDefault();
         }
     }
 }
