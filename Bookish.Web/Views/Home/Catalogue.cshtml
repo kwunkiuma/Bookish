@@ -53,15 +53,18 @@ else
                 </tr>
             }
         </table>
-        <nav>
-            <ul class="pagination">
-                @for (var pageNumber = 1; pageNumber <= Model.LastPage; pageNumber++)
-                {
-                    <li class="@Model.GetListClasses(pageNumber)">
-                        <a class="page-link" asp-action="Catalogue" asp-route-page="@pageNumber" asp-route-filter="@Model.Filter">@pageNumber</a>
-                    </li>
-                }
-            </ul>
-        </nav>
+        @if (Model.LastPage > 1)
+        {
+            <nav>
+                <ul class="pagination">
+                    @for (var pageNumber = 1; pageNumber <= Model.LastPage; pageNumber++)
+                    {
+                        <li class="@Model.GetPageNumberClass(pageNumber)">
+                            <a class="page-link" asp-action="Catalogue" asp-route-page="@pageNumber" asp-route-filter="@Model.Filter">@pageNumber</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
     </div>
 }
