@@ -19,9 +19,9 @@ namespace Bookish.Web.Models
             Page = page;
             Filter = filter;
 
-            Catalogue = catalogue.ToList();
-            LastPage = (int) Math.Ceiling(Catalogue.Count() / (double) PageSize);
-            Catalogue = Catalogue
+            var fullCatalogue = catalogue.ToList();
+            LastPage = (int) Math.Ceiling(fullCatalogue.Count() / (double) PageSize);
+            Catalogue = fullCatalogue
                 .Skip((page - 1) * PageSize)
                 .Take(PageSize);
         }
