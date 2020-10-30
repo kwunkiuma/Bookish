@@ -16,14 +16,15 @@ namespace Bookish.Web.Models
 
         public CatalogueViewModel(IEnumerable<CatalogueEntry> catalogue, int page = 1, string filter = "")
         {
-            Page = page;
-            Filter = filter;
-
             var fullCatalogue = catalogue.ToList();
+
             LastPage = (int) Math.Ceiling(fullCatalogue.Count() / (double) PageSize);
+            Page = ClampPageNumber(page);
             Catalogue = fullCatalogue
-                .Skip((page - 1) * PageSize)
+                .Skip((Page - 1) * PageSize)
                 .Take(PageSize);
+
+            Filter = filter;
         }
 
         public string GetPageNumberClass(int pageNumber)
@@ -31,6 +32,20 @@ namespace Bookish.Web.Models
             return pageNumber == Page
                 ? "page-item active"
                 : "page-item";
+        }
+
+        private int ClampPageNumber(int page)
+        {
+            if (page < 1)
+            {
+                return 1;
+            }
+            if (page > LastPage)
+            {
+                return LastPage;
+            }
+
+            return page;
         }
     }
 }
