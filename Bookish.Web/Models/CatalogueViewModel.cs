@@ -19,7 +19,7 @@ namespace Bookish.Web.Models
             var fullCatalogue = catalogue.ToList();
 
             LastPage = (int) Math.Ceiling(fullCatalogue.Count() / (double) PageSize);
-            Page = ClampPageNumber(page);
+            Page = GetValidPageNumber(page);
             Catalogue = fullCatalogue
                 .Skip((Page - 1) * PageSize)
                 .Take(PageSize);
@@ -34,7 +34,7 @@ namespace Bookish.Web.Models
                 : "page-item";
         }
 
-        private int ClampPageNumber(int page)
+        private int GetValidPageNumber(int page)
         {
             if (page < 1)
             {
