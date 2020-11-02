@@ -87,7 +87,7 @@ namespace Bookish.DataAccess
                 ORDER BY
 	                Loans.DueDate";
 
-            return dbConnection.Query<BookLoan>(query, new {UserID = userId});
+            return dbConnection.Query<BookLoan>(query, new { UserID = userId });
         }
 
         public void AddBook(string title, string author, string isbn, int totalCopies)

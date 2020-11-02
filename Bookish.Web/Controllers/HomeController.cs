@@ -48,12 +48,16 @@ namespace Bookish.Web.Controllers
             return View(model);
         }
 
-        public IActionResult NewBook()
+        [ActionName("NewBook")]
+        public IActionResult NewBook(string title = "", string author = "", string isbn = "", int totalCopies = 1)
         {
-            return View();
+            var model = new NewBookViewModel(title, author, isbn, totalCopies);
+            return View(model);
         }
 
-        public IActionResult AddBook(string title, string author, string isbn, int totalCopies)
+        [HttpPost]
+        [ActionName("NewBook")]
+        public IActionResult NewBookPost(string title, string author, string isbn, int totalCopies)
         {
             try
             {
@@ -61,7 +65,7 @@ namespace Bookish.Web.Controllers
             }
             catch
             {
-                return RedirectToAction("NewBook");
+                return RedirectToAction("NewBook", new { title, author, isbn, totalCopies });
             }
 
             return RedirectToAction("Barcodes");
