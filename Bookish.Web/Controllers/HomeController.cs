@@ -48,7 +48,6 @@ namespace Bookish.Web.Controllers
             return View(model);
         }
 
-        [ActionName("NewBook")]
         public IActionResult NewBook(string title = "", string author = "", string isbn = "", int totalCopies = 1)
         {
             var model = new NewBookViewModel(title, author, isbn, totalCopies);

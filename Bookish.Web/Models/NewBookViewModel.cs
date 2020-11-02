@@ -8,10 +8,10 @@ namespace Bookish.Web.Models
 {
     public class NewBookViewModel
     {
-        public string Title;
-        public string Author;
-        public string Isbn;
-        public int TotalCopies;
+        public string Title { get; }
+        public string Author { get; }
+        public string Isbn { get; }
+        public int TotalCopies { get; }
 
         public NewBookViewModel(string title, string author, string isbn, int totalCopies)
         {
