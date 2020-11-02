@@ -92,14 +92,6 @@ namespace Bookish.DataAccess
 
         public void AddBook(string title, string author, string isbn, int totalCopies)
         {
-            var booksQuery =
-                @"INSERT INTO Books (ISBN, Title, Author)
-                VALUES (@ISBN, @Title, @Author)";
-
-            var parameters = new { Title = title, Author = author, ISBN = isbn };
-
-            dbConnection.Execute(booksQuery, parameters);
-
             var lastId = LastCopiesId();
 
             var valuesList = new List<string>();
@@ -108,11 +100,13 @@ namespace Bookish.DataAccess
                 valuesList.Add($"({lastId + i}, @ISBN)");
             }
 
-            var copiesQuery =
+            var query =
+                @"INSERT INTO Books (ISBN, Title, Author)
+                VALUES (@ISBN, @Title, @Author); " +
                 @"INSERT INTO BookCopies (CopyId, ISBN) VALUES " +
                 string.Join(", ", valuesList);
 
-            dbConnection.Execute(copiesQuery, parameters);
+            dbConnection.Execute(query, new { Title = title, Author = author, ISBN = isbn });
         }
 
         private int LastCopiesId()
