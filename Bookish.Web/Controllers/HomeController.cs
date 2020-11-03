@@ -49,11 +49,9 @@ namespace Bookish.Web.Controllers
 
         public IActionResult NewBook(string title = "", string author = "", string isbn = "", int totalCopies = 1)
         {
-            var message = bookishService.DoesIsbnExist(isbn)
-                ? "This book already exists."
-                : "";
+            var isbnExists = bookishService.DoesIsbnExist(isbn);
 
-            var model = new NewBookViewModel(title, author, isbn, totalCopies, message);
+            var model = new NewBookViewModel(title, author, isbn, totalCopies, isbnExists);
             return View(model);
         }
 
