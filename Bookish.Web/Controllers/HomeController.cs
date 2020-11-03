@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using Bookish.DataAccess;
 using Bookish.DataAccess.Services;
 using Bookish.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -77,6 +75,15 @@ namespace Bookish.Web.Controllers
         {
             var model = new BarcodeViewModel(barcodeService.GetNewBookBarcodes(isbn));
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddLoan(int copyId)
+        {
+            var lenderID = User.Claims.First().Value;
+            bookishService.AddLoan(copyId, lenderID);
+
+            return RedirectToAction("Loans");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

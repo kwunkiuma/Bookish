@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Bookish.DataAccess.Services
         IEnumerable<BookCopy> GetCopies(string filter);
         IEnumerable<BookLoan> GetLoans(string userId);
         void AddBook(string title, string author, string isbn, int totalCopies);
+        void AddLoan(int copyId, string lenderId);
         bool DoesIsbnExist(string isbn);
     }
 
@@ -110,6 +112,22 @@ namespace Bookish.DataAccess.Services
 
             return dbConnection.Query<string>(query, new { ISBN = isbn })
                 .Any();
+        }
+
+        public void AddLoan(int copyId, string lenderId)
+        {
+            var query = "INSERT INTO Loans (CopyID, LenderID, DueDate) VALUES (@CopyID, @LenderID, @DueDate)";
+
+            var parameters = new
+            {
+                CopyID = copyId,
+                LenderID = lenderId,
+                DueDate = DateTime.Now
+                    .AddDays(14)
+                    .ToString("yyyy-MM-dd")
+            };
+
+            dbConnection.Execute(query, parameters);
         }
     }
 }
