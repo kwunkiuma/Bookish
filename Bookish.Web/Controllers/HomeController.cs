@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
 using Bookish.DataAccess;
 using Bookish.Web.Models;
@@ -50,7 +49,11 @@ namespace Bookish.Web.Controllers
 
         public IActionResult NewBook(string title = "", string author = "", string isbn = "", int totalCopies = 1)
         {
-            var model = new NewBookViewModel(title, author, isbn, totalCopies);
+            var message = bookishService.GetIsbnExists(isbn)
+                ? "This book already exists."
+                : "";
+
+            var model = new NewBookViewModel(title, author, isbn, totalCopies, message);
             return View(model);
         }
 

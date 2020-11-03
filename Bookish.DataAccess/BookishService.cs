@@ -13,6 +13,7 @@ namespace Bookish.DataAccess
         IEnumerable<BookCopy> GetCopies(string filter);
         IEnumerable<BookLoan> GetLoans(string userId);
         void AddBook(string title, string author, string isbn, int totalCopies);
+        bool GetIsbnExists(string isbn);
     }
 
     public class BookishService : IBookishService
@@ -107,6 +108,14 @@ namespace Bookish.DataAccess
                 string.Join(", ", valuesList);
 
             dbConnection.Execute(query, new { Title = title, Author = author, ISBN = isbn });
+        }
+
+        public bool GetIsbnExists(string isbn)
+        {
+            var query = "SELECT ISBN FROM Books WHERE ISBN = @ISBN";
+
+            return dbConnection.Query<string>(query, new {ISBN = isbn})
+                .Any();
         }
 
         private int LastCopiesId()
