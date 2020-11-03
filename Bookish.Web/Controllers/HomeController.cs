@@ -49,7 +49,7 @@ namespace Bookish.Web.Controllers
 
         public IActionResult NewBook(string title = "", string author = "", string isbn = "", int totalCopies = 1)
         {
-            var message = bookishService.GetIsbnExists(isbn)
+            var message = bookishService.DoesIsbnExist(isbn)
                 ? "This book already exists."
                 : "";
 
