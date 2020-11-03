@@ -30,7 +30,10 @@
     
     <div class="form-row">
         <button type="submit" class="btn btn-primary">Add book</button>
-        <label class="col-form-label">@Model.ErrorMessage</label>
+        @if (!string.IsNullOrEmpty(@Model.ErrorMessage))
+        {
+            <label class="col-form-label alert-danger">@Model.ErrorMessage</label>
+        }
     </div>
 
 </form>
