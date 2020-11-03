@@ -1,0 +1,39 @@
+﻿@model NewBookViewModel
+@{
+    ViewData["Title"] = "New Book";
+}
+
+<div class="header">
+    <h1>@ViewData["Title"]</h1>
+</div>
+
+@if (!string.IsNullOrEmpty(@Model.ErrorMessage))
+{
+    <label class="col-form-label alert-danger alert">@Model.ErrorMessage</label>
+}
+
+<form asp-action="NewBook" method="post">
+    <div class="form-group">
+        <label>Title</label>
+        <input type="text" class="form-control" name="title" required value="@Model.Title">
+    </div>
+
+    <div class="form-group">
+        <label>Author</label>
+        <input type="text" class="form-control" name="author" required value="@Model.Author">
+    </div>
+
+    <div class="form-group">
+        <label>ISBN</label>
+        <input type="text" class="form-control" name="isbn" required pattern="\d{13}" placeholder="e.g. 1234567890123" value="@Model.Isbn">
+    </div>
+
+    <div class="form-group">
+        <label>Total copies</label>
+        <input class="col-1 form-control" type="number" name="totalCopies" required min="1" value="@Model.TotalCopies">
+    </div>
+    
+    <div class="form-row">
+        <button type="submit" class="btn btn-primary">Add book</button>
+    </div>
+</form>

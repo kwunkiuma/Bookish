@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using Dapper;
 
 namespace Bookish.DataAccess
@@ -11,6 +12,8 @@ namespace Bookish.DataAccess
         IEnumerable<CatalogueEntry> GetCatalogue(string filter);
         IEnumerable<BookCopy> GetCopies(string filter);
         IEnumerable<BookLoan> GetLoans(string userId);
+        void AddBook(string title, string author, string isbn, int totalCopies);
+        bool DoesIsbnExist(string isbn);
     }
 
     public class BookishService : IBookishService
@@ -86,6 +89,27 @@ namespace Bookish.DataAccess
 	                Loans.DueDate";
 
             return dbConnection.Query<BookLoan>(query, new { UserID = userId });
+        }
+
+        public void AddBook(string title, string author, string isbn, int totalCopies)
+        {
+            var valuesList = Enumerable.Repeat<string>("(@ISBN)", totalCopies);
+
+            var query =
+                @"INSERT INTO Books (ISBN, Title, Author)
+                VALUES (@ISBN, @Title, @Author); " +
+                @"INSERT INTO BookCopies (ISBN) VALUES " +
+                string.Join(", ", valuesList);
+
+            dbConnection.Execute(query, new { Title = title, Author = author, ISBN = isbn });
+        }
+
+        public bool DoesIsbnExist(string isbn)
+        {
+            var query = "SELECT ISBN FROM Books WHERE ISBN = @ISBN";
+
+            return dbConnection.Query<string>(query, new { ISBN = isbn })
+                .Any();
         }
     }
 }
