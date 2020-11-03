@@ -59,15 +59,12 @@ namespace Bookish.Web.Controllers
         [ActionName("NewBook")]
         public IActionResult NewBookPost(string title, string author, string isbn, int totalCopies)
         {
-            try
-            {
-                bookishService.AddBook(title, author, isbn, totalCopies);
-            }
-            catch
+            if (totalCopies < 1 || bookishService.DoesIsbnExist(isbn))
             {
                 return RedirectToAction("NewBook", new { title, author, isbn, totalCopies });
             }
 
+            bookishService.AddBook(title, author, isbn, totalCopies);
             return RedirectToAction("Barcodes");
         }
 
