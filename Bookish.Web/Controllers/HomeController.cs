@@ -65,12 +65,13 @@ namespace Bookish.Web.Controllers
             }
 
             bookishService.AddBook(title, author, isbn, totalCopies);
-            return RedirectToAction("Barcodes");
+            return RedirectToAction("Barcodes", new { isbn, totalCopies });
         }
 
-        public IActionResult Barcodes()
+        public IActionResult Barcodes(string isbn, int totalCopies)
         {
-            return View();
+            var model = new BarcodeViewModel(isbn, totalCopies);
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

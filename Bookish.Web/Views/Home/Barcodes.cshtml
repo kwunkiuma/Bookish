@@ -1,7 +1,17 @@
-﻿@{
+﻿@model BarcodeViewModel
+@{
     ViewData["Title"] = "Barcodes";
 }
+<link rel="stylesheet" href="~/css/barcodes.css" asp-append-version="true"/>
 
 <div class="header">
     <h1>@ViewData["Title"]</h1>
+</div>
+
+<p>Print this page for labels to place on the new books.</p>
+<div align="center">
+    @for (var i = 0; i < Model.TotalCopies; i++)
+    {
+           <img src="data:image/png;base64, @Model.EncodedBarcode" alt="Barcode" class="barcode" />
+    }
 </div>
