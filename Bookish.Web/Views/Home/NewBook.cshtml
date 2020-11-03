@@ -7,6 +7,11 @@
     <h1>@ViewData["Title"]</h1>
 </div>
 
+@if (!string.IsNullOrEmpty(@Model.ErrorMessage))
+{
+    <label class="col-form-label alert-danger alert">@Model.ErrorMessage</label>
+}
+
 <form asp-action="NewBook" method="post">
     <div class="form-group">
         <label>Title</label>
@@ -30,10 +35,5 @@
     
     <div class="form-row">
         <button type="submit" class="btn btn-primary">Add book</button>
-        @if (!string.IsNullOrEmpty(@Model.ErrorMessage))
-        {
-            <label class="col-form-label alert-danger">@Model.ErrorMessage</label>
-        }
     </div>
-
 </form>
