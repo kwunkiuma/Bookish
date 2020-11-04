@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Bookish.DataAccess;
+using Bookish.DataAccess.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -55,6 +55,7 @@ namespace Bookish.Web
             });
 
             services.AddScoped<IBookishService, BookishService>();
+            services.AddScoped<IBarcodeService, BarcodeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
