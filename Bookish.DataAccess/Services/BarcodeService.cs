@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -27,12 +26,8 @@ namespace Bookish.DataAccess.Services
             var bookCopies = bookishService.GetCopies(isbn).ToList();
             var title = bookCopies.First().Title;
             var author = bookCopies.First().Author;
-            var encodedBarcodes = new List<string>();
-
-            foreach (var copy in bookCopies)
-            {
-                encodedBarcodes.Add(EncodeBarcode($"{isbn}{copy.CopyId}"));
-            }
+            var encodedBarcodes = bookCopies.Select(
+                copy => EncodeBarcode($"{isbn}{copy.CopyId}"));
 
             return new NewBook(title, author, encodedBarcodes);
         }
