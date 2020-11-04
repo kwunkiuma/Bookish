@@ -75,17 +75,7 @@ namespace Bookish.Web.Controllers
         [Route("/Home/Barcodes/{isbn}")]
         public IActionResult Barcodes(string isbn)
         {
-            var bookCopies = bookishService.GetCopies(isbn).ToList();
-            var title = bookCopies.First().Title;
-            var author = bookCopies.First().Author;
-            var barcodesList = new List<string>();
-
-            foreach (var copy in bookCopies)
-            {
-                barcodesList.Add(barcodeService.EncodeBarcode($"{isbn}{copy.CopyId}"));
-            }
-
-            var model = new BarcodeViewModel(title, author, barcodesList);
+            var model = new BarcodeViewModel(barcodeService.GetNewBookBarcodes(isbn));
             return View(model);
         }
 

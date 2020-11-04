@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.IO;
-using BarcodeLib;
+using Bookish.DataAccess;
 
 namespace Bookish.Web.Models
 {
@@ -10,13 +7,13 @@ namespace Bookish.Web.Models
     {
         public string Title { get; }
         public string Author { get; }
-        public List<string> BarcodeList { get; }
+        public IEnumerable<string> BarcodeList { get; }
 
-        public BarcodeViewModel(string title, string author, List<string> barcodeList)
+        public BarcodeViewModel(NewBook newBook)
         {
-            Title = title;
-            Author = author;
-            BarcodeList = barcodeList;
+            Title = newBook.Title;
+            Author = newBook.Author;
+            BarcodeList = newBook.EncodedBarcodes;
         }
     }
 }
