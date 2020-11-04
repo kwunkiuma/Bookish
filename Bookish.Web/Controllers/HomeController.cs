@@ -77,7 +77,7 @@ namespace Bookish.Web.Controllers
         {
             var bookCopies = bookishService.GetCopies(isbn).ToList();
             var title = bookCopies.First().Title;
-            var author= bookCopies.First().Author;
+            var author = bookCopies.First().Author;
             var barcodesList = new List<string>();
 
             foreach (var copy in bookCopies)
