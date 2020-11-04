@@ -8,10 +8,11 @@
     <h1>@ViewData["Title"]</h1>
 </div>
 
-<p>Print this page for labels to place on the new books.</p>
+<p>@Model.Title by @Model.Author has successfully be added to the library. Print the barcodes below to label the books.</p>
+
 <div align="center">
-    @for (var i = 0; i < Model.TotalCopies; i++)
-    {
-           <img src="data:image/png;base64, @Model.EncodedBarcode" alt="Barcode" class="barcode" />
+    @foreach (var barcodeEncoding in Model.BarcodeList) {
+        <img src="data:image/png;base64, @barcodeEncoding" alt="Barcode" class="barcode" />
+        <br />
     }
 </div>

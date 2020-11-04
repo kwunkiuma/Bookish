@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Bookish.DataAccess;
+using Bookish.DataAccess.Services;
 using Bookish.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,11 +13,13 @@ namespace Bookish.Web.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly IBookishService bookishService;
+        private readonly IBarcodeService barcodeService;
 
-        public HomeController(ILogger<HomeController> logger, IBookishService bookishService)
+        public HomeController(ILogger<HomeController> logger, IBookishService bookishService, IBarcodeService barcodeService)
         {
             this.logger = logger;
             this.bookishService = bookishService;
+            this.barcodeService = barcodeService;
         }
 
         public IActionResult Catalogue(int page = 1, string filter = "")
@@ -65,12 +69,23 @@ namespace Bookish.Web.Controllers
             }
 
             bookishService.AddBook(title, author, isbn, totalCopies);
-            return RedirectToAction("Barcodes", new { isbn, totalCopies });
+            return RedirectToAction("Barcodes", new { isbn });
         }
 
-        public IActionResult Barcodes(string isbn, int totalCopies)
+        [Route("/Home/Barcodes/{isbn}")]
+        public IActionResult Barcodes(string isbn)
         {
-            var model = new BarcodeViewModel(isbn, totalCopies);
+            var bookCopies = bookishService.GetCopies(isbn).ToList();
+            var title = bookCopies.First().Title;
+            var author= bookCopies.First().Author;
+            var barcodesList = new List<string>();
+
+            foreach (var copy in bookCopies)
+            {
+                barcodesList.Add(barcodeService.EncodeBarcode($"{isbn}{copy.CopyId}"));
+            }
+
+            var model = new BarcodeViewModel(title, author, barcodesList);
             return View(model);
         }
 

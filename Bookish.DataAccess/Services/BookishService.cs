@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 
-namespace Bookish.DataAccess
+namespace Bookish.DataAccess.Services
 {
     public interface IBookishService
     {
@@ -93,7 +93,7 @@ namespace Bookish.DataAccess
 
         public void AddBook(string title, string author, string isbn, int totalCopies)
         {
-            var valuesList = Enumerable.Repeat<string>("(@ISBN)", totalCopies);
+            var valuesList = Enumerable.Repeat("(@ISBN)", totalCopies);
 
             var query =
                 @"INSERT INTO Books (ISBN, Title, Author)
@@ -102,6 +102,25 @@ namespace Bookish.DataAccess
                 string.Join(", ", valuesList);
 
             dbConnection.Execute(query, new { Title = title, Author = author, ISBN = isbn });
+        }
+
+        public IEnumerable<BookCopy> GetTotalCopies(string isbn)
+        {
+            var query =
+                @"SELECT
+                    Books.Title AS Title,
+                    Books.Author AS Author,
+                    BookCopies.CopyID AS CopyID,
+                    AspNetUsers.UserName AS Username,
+                    Loans.DueDate AS DueDate
+                FROM
+                    BookCopies
+                WHERE
+                    BookCopies.ISBN = @ISBN
+                ORDER BY
+                    DueDate";
+
+            return dbConnection.Query<BookCopy>(query, new { ISBN = isbn });
         }
 
         public bool DoesIsbnExist(string isbn)

@@ -1,5 +1,5 @@
 ﻿using System;
-using Bookish.DataAccess;
+using Bookish.DataAccess.Services;
 
 namespace Bookish.ConsoleApp
 {
