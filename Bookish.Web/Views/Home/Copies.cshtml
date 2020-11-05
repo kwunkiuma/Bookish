@@ -29,7 +29,7 @@
                 <td>
                     @if (string.IsNullOrEmpty(copy.Username))
                     {
-                        <form asp-action="AddLoan" asp-route-copyID="@copy.CopyId">
+                        <form asp-action="LoanBook" asp-route-copyID="@copy.CopyId">
                             <div class="form-row">
                                 <button type="submit" class="btn btn-primary">Loan for two weeks</button>
                             </div>

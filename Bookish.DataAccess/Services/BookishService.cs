@@ -14,7 +14,7 @@ namespace Bookish.DataAccess.Services
         IEnumerable<BookCopy> GetCopies(string filter);
         IEnumerable<BookLoan> GetLoans(string userId);
         void AddBook(string title, string author, string isbn, int totalCopies);
-        void AddLoan(int copyId, string lenderId);
+        void LoanBook(int copyId, string lenderId);
         bool DoesIsbnExist(string isbn);
     }
 
@@ -114,7 +114,7 @@ namespace Bookish.DataAccess.Services
                 .Any();
         }
 
-        public void AddLoan(int copyId, string lenderId)
+        public void LoanBook(int copyId, string lenderId)
         {
             var query = "INSERT INTO Loans (CopyID, LenderID, DueDate) VALUES (@CopyID, @LenderID, @DueDate)";
 

@@ -78,10 +78,10 @@ namespace Bookish.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddLoan(int copyId)
+        public IActionResult LoanBook(int copyId)
         {
             var lenderID = User.Claims.First().Value;
-            bookishService.AddLoan(copyId, lenderID);
+            bookishService.LoanBook(copyId, lenderID);
 
             return RedirectToAction("Loans");
         }
