@@ -26,7 +26,7 @@
                 <td>@bookLoan.Isbn</td>
                 <td>@bookLoan.DueDate.ToShortDateString()</td>
                 <td>
-                    <form asp-action="ReturnBook" asp-route-copyID="@bookLoan.CopyId">
+                    <form asp-action="ReturnBook" asp-route-copyId="@bookLoan.CopyId">
                         <div class="form-row">
                             <button type="submit" class="btn btn-primary">Return</button>
                         </div>

@@ -135,7 +135,7 @@ namespace Bookish.DataAccess.Services
         {
             var query = $"DELETE FROM Loans WHERE CopyID = @CopyID";
 
-            dbConnection.Execute(query, new {CopyID = copyId});
+            dbConnection.Execute(query, new { CopyID = copyId });
         }
     }
 }
