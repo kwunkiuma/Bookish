@@ -17,12 +17,25 @@
             <th>
                 Status
             </th>
+            <th>
+                Loan
+            </th>
         </tr>
         @foreach (var copy in Model.Copies)
         {
             <tr>
                 <td>@copy.CopyId</td>
                 <td>@Model.GetStatus(copy)</td>
+                <td>
+                    @if (string.IsNullOrEmpty(copy.Username))
+                    {
+                        <form asp-action="LoanBook" asp-route-copyID="@copy.CopyId">
+                            <div class="form-row">
+                                <button type="submit" class="btn btn-primary">Loan for two weeks</button>
+                            </div>
+                        </form>
+                    }
+                </td>
             </tr>
         }
     </table>
