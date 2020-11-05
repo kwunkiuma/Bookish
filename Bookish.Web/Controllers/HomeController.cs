@@ -86,6 +86,13 @@ namespace Bookish.Web.Controllers
             return RedirectToAction("Loans");
         }
 
+        [HttpPost]
+        public IActionResult ReturnBook(int copyId)
+        {
+            bookishService.ReturnBook(copyId);
+            return RedirectToAction("Loans");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
