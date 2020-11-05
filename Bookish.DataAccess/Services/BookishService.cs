@@ -15,6 +15,7 @@ namespace Bookish.DataAccess.Services
         IEnumerable<BookLoan> GetLoans(string userId);
         void AddBook(string title, string author, string isbn, int totalCopies);
         void LoanBook(int copyId, string lenderId);
+        void ReturnBook(int copyId);
         bool DoesIsbnExist(string isbn);
     }
 
@@ -128,6 +129,13 @@ namespace Bookish.DataAccess.Services
             };
 
             dbConnection.Execute(query, parameters);
+        }
+
+        public void ReturnBook(int copyId)
+        {
+            var query = $"DELETE FROM Loans WHERE CopyID = @CopyID";
+
+            dbConnection.Execute(query, new { CopyID = copyId });
         }
     }
 }

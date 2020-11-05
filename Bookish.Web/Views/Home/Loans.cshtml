@@ -10,21 +10,12 @@
 <div>
     <table class="table">
         <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Title
-            </th>
-            <th>
-                Author
-            </th>
-            <th>
-                ISBN
-            </th>
-            <th>
-                Due date
-            </th>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Due date</th>
+            <th>Return</th>
         </tr>
         @foreach (var bookLoan in Model.BookLoans)
         {
@@ -34,6 +25,13 @@
                 <td>@bookLoan.Author</td>
                 <td>@bookLoan.Isbn</td>
                 <td>@bookLoan.DueDate.ToShortDateString()</td>
+                <td>
+                    <form asp-action="ReturnBook" asp-route-copyId="@bookLoan.CopyId">
+                        <div class="form-row">
+                            <button type="submit" class="btn btn-primary">Return</button>
+                        </div>
+                    </form>
+                </td>
             </tr>
         }
     </table>
