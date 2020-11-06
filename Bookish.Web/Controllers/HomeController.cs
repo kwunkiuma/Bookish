@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
+using System.Security.Claims;
 using Bookish.DataAccess.Services;
 using Bookish.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +42,7 @@ namespace Bookish.Web.Controllers
 
             if (!copies.Any())
             {
-                return RedirectToAction("Error", "Home");
+                return StatusCode(404);
             }
 
             var model = new CopiesViewModel(copies);
@@ -73,7 +73,14 @@ namespace Bookish.Web.Controllers
         [Route("/Home/Barcodes/{isbn}")]
         public IActionResult Barcodes(string isbn)
         {
-            var model = new BarcodeViewModel(barcodeService.GetNewBookBarcodes(isbn));
+            var newBook = barcodeService.GetNewBookBarcodes(isbn);
+
+            if (newBook == null)
+            {
+                return StatusCode(404);
+            }
+
+            var model = new BarcodeViewModel(newBook);
             return View(model);
         }
 
@@ -81,6 +88,12 @@ namespace Bookish.Web.Controllers
         public IActionResult LoanBook(int copyId)
         {
             var lenderID = User.Claims.First().Value;
+
+            if (!bookishService.IsCopyAvailable(copyId))
+            {
+                return StatusCode(403);
+            }
+
             bookishService.LoanBook(copyId, lenderID);
 
             return RedirectToAction("Loans");
@@ -89,14 +102,26 @@ namespace Bookish.Web.Controllers
         [HttpPost]
         public IActionResult ReturnBook(int copyId)
         {
+            if (GetCurrentUserId() != bookishService.GetCopyLender(copyId))
+            {
+                return StatusCode(403);
+            }
+
             bookishService.ReturnBook(copyId);
             return RedirectToAction("Loans");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("/StatusCode/{errorCode}")]
+        public IActionResult Error(int errorCode)
         {
-            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+            Response.StatusCode = errorCode;
+            return View(new ErrorViewModel(errorCode));
+        }
+
+        private string GetCurrentUserId()
+        {
+            return User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
     }
 }

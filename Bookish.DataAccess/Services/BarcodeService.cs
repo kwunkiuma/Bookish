@@ -9,7 +9,7 @@ namespace Bookish.DataAccess.Services
 {
     public interface IBarcodeService
     {
-        NewBook GetNewBookBarcodes(string isbn);
+        NewBook? GetNewBookBarcodes(string isbn);
     }
 
     public class BarcodeService : IBarcodeService
@@ -21,9 +21,14 @@ namespace Bookish.DataAccess.Services
             this.bookishService = bookishService;
         }
 
-        public NewBook GetNewBookBarcodes(string isbn)
+        public NewBook? GetNewBookBarcodes(string isbn)
         {
             var bookCopies = bookishService.GetCopies(isbn).ToList();
+            if (!bookCopies.Any())
+            {
+                return null;
+            }
+
             var title = bookCopies.First().Title;
             var author = bookCopies.First().Author;
             var encodedBarcodes = bookCopies.Select(
