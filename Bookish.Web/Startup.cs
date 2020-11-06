@@ -65,14 +65,13 @@ namespace Bookish.Web
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                app.UseExceptionHandler("/StatusCode/500");
             }
             else
             {
-                app.UseExceptionHandler("/StatusCode/{0}");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseExceptionHandler("/StatusCode/500");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

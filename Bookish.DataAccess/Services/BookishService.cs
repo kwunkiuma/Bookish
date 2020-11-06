@@ -13,7 +13,7 @@ namespace Bookish.DataAccess.Services
         IEnumerable<CatalogueEntry> GetCatalogue(string filter);
         IEnumerable<BookCopy> GetCopies(string filter);
         IEnumerable<BookLoan> GetLoans(string userId);
-        string GetCopyLender(int copyId);
+        string? GetCopyLender(int copyId);
         void AddBook(string title, string author, string isbn, int totalCopies);
         void LoanBook(int copyId, string lenderId);
         void ReturnBook(int copyId);
@@ -124,11 +124,11 @@ namespace Bookish.DataAccess.Services
             return !dbConnection.Query<string>(query, new { CopyID = copyId }).Any();
         }
 
-        public string GetCopyLender(int copyId)
+        public string? GetCopyLender(int copyId)
         {
             var query = "SELECT LenderID FROM Loans WHERE CopyID = @CopyID";
 
-            return dbConnection.Query<string>(query, new { CopyID = copyId }).Single();
+            return dbConnection.Query<string>(query, new { CopyID = copyId })?.SingleOrDefault();
         }
 
         public void LoanBook(int copyId, string lenderId)

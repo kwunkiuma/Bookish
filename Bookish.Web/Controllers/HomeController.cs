@@ -72,12 +72,14 @@ namespace Bookish.Web.Controllers
         [Route("/Home/Barcodes/{isbn}")]
         public IActionResult Barcodes(string isbn)
         {
-            if (!bookishService.DoesIsbnExist(isbn))
+            var newBook = barcodeService.GetNewBookBarcodes(isbn);
+
+            if (newBook == null)
             {
                 return StatusCode(404);
             }
 
-            var model = new BarcodeViewModel(barcodeService.GetNewBookBarcodes(isbn));
+            var model = new BarcodeViewModel(newBook);
             return View(model);
         }
 
@@ -99,7 +101,7 @@ namespace Bookish.Web.Controllers
         [HttpPost]
         public IActionResult ReturnBook(int copyId)
         {
-            if (User.Claims.First().Value != bookishService.GetCopyLender(copyId))
+            if (GetCurrentUserId() != bookishService.GetCopyLender(copyId))
             {
                 return StatusCode(403);
             }
@@ -112,7 +114,15 @@ namespace Bookish.Web.Controllers
         [Route("/StatusCode/{errorCode}")]
         public IActionResult Error(int errorCode)
         {
+            Response.StatusCode = errorCode;
             return View(new ErrorViewModel(errorCode));
+        }
+
+        private string GetCurrentUserId()
+        {
+            return User.Claims
+                .Single(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")
+                .Value;
         }
     }
 }
