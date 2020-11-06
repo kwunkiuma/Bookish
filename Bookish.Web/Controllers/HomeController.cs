@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using Bookish.DataAccess.Services;
 using Bookish.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -120,9 +121,7 @@ namespace Bookish.Web.Controllers
 
         private string GetCurrentUserId()
         {
-            return User.Claims
-                .Single(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")
-                .Value;
+            return User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
     }
 }
